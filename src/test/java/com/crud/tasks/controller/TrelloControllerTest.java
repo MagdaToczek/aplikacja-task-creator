@@ -2,6 +2,8 @@ package com.crud.tasks.controller;
 
 import com.crud.tasks.domain.*;
 import com.crud.tasks.trello.facade.TrelloFacade;
+import com.google.gson.Gson;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
@@ -68,7 +70,9 @@ public class TrelloControllerTest {
         //Given
         TrelloCardDto trelloCardDto = new TrelloCardDto("Test", "Test description", "top", "1");
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("323", "test", "http://test.com", new Badge());
-        when(trelloFacade.createCard(ArgumentMatchers.any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(trelloCardDto);
+        //when(trelloFacade.createCard(ArgumentMatchers.any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
         //When
         //Then
     }

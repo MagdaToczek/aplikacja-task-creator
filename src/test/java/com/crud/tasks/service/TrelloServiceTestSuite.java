@@ -51,7 +51,7 @@ public class TrelloServiceTestSuite {
         //Given
         Trello trello = new Trello(1,2);
         TrelloCardDto trelloCardDto = new TrelloCardDto("test name", "test description", "test pos", "test id");
-        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "name", "short url", new Badge(1, new AttachmentByType(new Trello())));
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "name", "short url", new Badge(1, new AttachmentByType(trello)));
         when(trelloClient.createNewCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
         //When
         CreatedTrelloCardDto createdCardDto = trelloService.createTrelloCard(trelloCardDto);
@@ -60,7 +60,7 @@ public class TrelloServiceTestSuite {
         Assert.assertEquals("name",createdCardDto.getName());
         Assert.assertEquals("short url", createdCardDto.getShortUrl());
         Assert.assertEquals(1, createdCardDto.getBadges().getVotes());
-        Assert.assertEquals(0, createdCardDto.getBadges().getAttachments().getTrello().getBoard());
-        Assert.assertEquals(0, createdCardDto.getBadges().getAttachments().getTrello().getCard());
+        Assert.assertEquals(1, createdCardDto.getBadges().getAttachments().getTrello().getBoard());
+        Assert.assertEquals(2, createdCardDto.getBadges().getAttachments().getTrello().getCard());
     }
 }

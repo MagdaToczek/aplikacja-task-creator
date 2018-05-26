@@ -16,16 +16,6 @@ public class TrelloValidatorTestSuite {
     @InjectMocks
     TrelloValidator trelloValidator;
 
-    @Ignore
-    @Test
-    public void testValidateCardDuringTest() {
-        //Given
-        TrelloCard trelloCard = new TrelloCard("test card", "desc", "pos", "id");
-        //When & Then
-        trelloValidator.validateCard(trelloCard);
-        //Assert.assertThat(logger.getLoggingEvents(), is(asList(info("Someone is testing my application!"))));
-    }
-
     @Test
     public void testValidteTrelloBoardsInTest() {
         //Given
