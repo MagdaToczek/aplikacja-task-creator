@@ -3,10 +3,8 @@ package com.crud.tasks.controller;
 import com.crud.tasks.domain.*;
 import com.crud.tasks.trello.facade.TrelloFacade;
 import com.google.gson.Gson;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,17 +15,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TrelloController.class)
-public class TrelloControllerTest {
+public class TrelloControllerTestSuite {
     @Autowired
     private MockMvc mockMvc;
 
@@ -72,8 +71,14 @@ public class TrelloControllerTest {
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("323", "test", "http://test.com", new Badge());
         Gson gson = new Gson();
         String jsonContent = gson.toJson(trelloCardDto);
-        //when(trelloFacade.createCard(ArgumentMatchers.any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
-        //When
-        //Then
+        when(trelloFacade.createCard(any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
+        //When & Then
+        mockMvc.perform(post("/v1/trello/createTrelloCard")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(jsonPath("$.id", is("323")))
+                .andExpect(jsonPath("$.name", is("test")))
+                .andExpect(jsonPath("$.shortUrl", is("http://test.com")));
     }
 }
