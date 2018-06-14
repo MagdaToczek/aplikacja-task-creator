@@ -18,4 +18,7 @@ public class AdminConfig {
 
     @Value("${company.address}")
     private String companyAddress;
+
+    @Value("${spring.jpa.database}")
+    private String dbType;
 }
