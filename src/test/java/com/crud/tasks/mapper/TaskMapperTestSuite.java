@@ -26,7 +26,7 @@ public class TaskMapperTestSuite {
         //When
         Task mappedTask = taskMapper.mapToTask(taskDto);
         //Then
-        assertEquals(1,mappedTask.getId(),0);
+        assertEquals(1, mappedTask.getId(),0);
         assertEquals("title", mappedTask.getTitle());
         assertEquals("content", mappedTask.getContent());
     }
